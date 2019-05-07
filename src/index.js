@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import TodosContext from './context';
+import todosReducer from './reducer';
+import TodoList from './components/TodoList';
 
-export const ContextUser = React.createContext();
+const App = () => {
+  const initialState = useContext(TodosContext);
+  const [state, dispatch] = useReducer(todosReducer, initialState);
 
-const username = 'Bob';
+  return (
+    <TodosContext.Provider value={{ state, dispatch }}>
+      <TodoList />
+    </TodosContext.Provider>
+  );
+};
 
-ReactDOM.render(
-  <ContextUser.Provider value={username}>
-    <App />
-  </ContextUser.Provider>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
 
 serviceWorker.unregister();
