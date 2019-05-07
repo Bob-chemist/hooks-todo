@@ -23,7 +23,11 @@ function TodoList() {
             >
               {todo.text}
             </span>
-            <button className="">
+            <button
+              onClick={() =>
+                dispatch({ type: 'SET_CURRENT_TODO', payload: todo })
+              }
+            >
               <img
                 src="https://icon.now.sh/edit/0050c5"
                 alt="Edit Icon"

@@ -6,6 +6,7 @@ const TodosContext = React.createContext({
     { id: 2, text: 'Drink', complete: false },
     { id: 3, text: 'Sleep', complete: true },
   ],
+  currentTodo: {},
 });
 
 export default TodosContext;
