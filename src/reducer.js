@@ -1,5 +1,3 @@
-import uuidv4 from 'uuid/v4';
-
 export default function todosReducer(state, action) {
   switch (action.type) {
     case 'GET_TODOS':
@@ -8,26 +6,27 @@ export default function todosReducer(state, action) {
         todos: action.payload,
       };
     case 'ADD_TODO':
-      if (!action.payload.trim()) {
-        return state;
-      }
-      if (
-        ~state.todos.findIndex(
-          todo =>
-            todo.text.trim().toLowerCase() ===
-            action.payload.trim().toLowerCase()
-        )
-      ) {
-        return state;
-      }
-      const newTodo = {
-        id: uuidv4(),
-        text: action.payload,
-        complete: false,
-      };
+      // if (!action.payload.trim()) {
+      //   return state;
+      // }
+      // if (
+      //   ~state.todos.findIndex(
+      //     todo =>
+      //       todo.text.trim().toLowerCase() ===
+      //       action.payload.trim().toLowerCase()
+      //   )
+      // ) {
+      //   return state;
+      // }
+      const { payload } = action;
+      console.log(payload);
+
       return {
         ...state,
-        todos: [...state.todos, newTodo],
+        todos: {
+          ...state.todos,
+          [payload.id]: { ...payload },
+        },
       };
     case 'SET_CURRENT_TODO':
       return {
@@ -35,18 +34,18 @@ export default function todosReducer(state, action) {
         currentTodo: action.payload,
       };
     case 'UPDATE_TODO':
-      if (!action.payload.trim()) {
-        return state;
-      }
-      if (
-        ~state.todos.findIndex(
-          todo =>
-            todo.text.trim().toLowerCase() ===
-            action.payload.trim().toLowerCase()
-        )
-      ) {
-        return state;
-      }
+      // if (!action.payload.trim()) {
+      //   return state;
+      // }
+      // if (
+      //   ~state.todos.findIndex(
+      //     todo =>
+      //       todo.text.trim().toLowerCase() ===
+      //       action.payload.trim().toLowerCase()
+      //   )
+      // ) {
+      //   return state;
+      // }
       const updatedTodo = { ...state.currentTodo, text: action.payload };
       const updatedTodoIndex = state.todos.findIndex(
         todo => todo.id === state.currentTodo.id
@@ -63,20 +62,20 @@ export default function todosReducer(state, action) {
       };
 
     case 'TOGGLE_TODO':
-      const toggledTodos = state.todos.map(todo =>
-        todo.id === action.payload.id
+      const toggledTodos = Object.keys(state.todos).map(i => {
+        const todo = state.todos[i];
+        return todo.id === action.payload.id
           ? { ...action.payload, complete: !action.payload.complete }
-          : { ...todo }
-      );
+          : { ...todo };
+      });
       return {
         ...state,
         todos: toggledTodos,
       };
 
     case 'REMOVE_TODO':
-      const removeTodos = state.todos.filter(
-        todo => todo.id !== action.payload.id
-      );
+      const removeTodos = { ...state.todos };
+      delete removeTodos[action.payload.id];
       const isRemovedTodo =
         state.currentTodo.id === action.payload.id ? {} : state.currentTodo;
       return {

@@ -8,7 +8,7 @@ import TodoForm from './components/TodoForm';
 import Axios from 'axios';
 
 const useAPI = endpoint => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     getData();
@@ -17,7 +17,15 @@ const useAPI = endpoint => {
 
   const getData = async () => {
     const response = await Axios.get(endpoint);
-    setData(response.data);
+    if (response.data) {
+      for (let i in response.data) {
+        const todo = response.data[i];
+        todo.id = i;
+      }
+      setData(response.data);
+    } else {
+      setData({});
+    }
   };
 
   return data;
