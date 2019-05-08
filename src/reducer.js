@@ -2,6 +2,11 @@ import uuidv4 from 'uuid/v4';
 
 export default function todosReducer(state, action) {
   switch (action.type) {
+    case 'GET_TODOS':
+      return {
+        ...state,
+        todos: action.payload,
+      };
     case 'ADD_TODO':
       if (!action.payload.trim()) {
         return state;
