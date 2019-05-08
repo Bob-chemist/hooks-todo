@@ -21,7 +21,14 @@ export default function TodoForm() {
   const handleSubmit = async event => {
     event.preventDefault();
     if (currentTodo.text) {
-      dispatch({ type: 'UPDATE_TODO', payload: todo });
+      const response = await Axios.patch(
+        `https://hooks-todo-9b98c.firebaseio.com/todos/${currentTodo.id}.json`,
+        { text: todo }
+      );
+      dispatch({
+        type: 'UPDATE_TODO',
+        payload: { text: response.data.text, id: currentTodo.id },
+      });
     } else {
       const response = await Axios.post(
         'https://hooks-todo-9b98c.firebaseio.com/todos.json',

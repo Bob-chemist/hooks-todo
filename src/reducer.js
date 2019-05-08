@@ -19,8 +19,6 @@ export default function todosReducer(state, action) {
       //   return state;
       // }
       const { payload } = action;
-      console.log(payload);
-
       return {
         ...state,
         todos: {
@@ -46,15 +44,12 @@ export default function todosReducer(state, action) {
       // ) {
       //   return state;
       // }
-      const updatedTodo = { ...state.currentTodo, text: action.payload };
-      const updatedTodoIndex = state.todos.findIndex(
-        todo => todo.id === state.currentTodo.id
-      );
-      const updatedTodos = [
-        ...state.todos.slice(0, updatedTodoIndex),
-        updatedTodo,
-        ...state.todos.slice(updatedTodoIndex + 1),
-      ];
+      // const updatedTodo = { ...state.currentTodo, text: action.payload };
+      // const updatedTodoIndex = state.todos.findIndex(
+      //   todo => todo.id === state.currentTodo.id
+      // );
+      const updatedTodos = { ...state.todos };
+      updatedTodos[action.payload.id].text = action.payload.text;
       return {
         ...state,
         currentTodo: {},
