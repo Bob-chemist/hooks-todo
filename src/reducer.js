@@ -62,12 +62,8 @@ export default function todosReducer(state, action) {
       };
 
     case 'TOGGLE_TODO':
-      const toggledTodos = Object.keys(state.todos).map(i => {
-        const todo = state.todos[i];
-        return todo.id === action.payload.id
-          ? { ...action.payload, complete: !action.payload.complete }
-          : { ...todo };
-      });
+      const toggledTodos = { ...state.todos };
+      toggledTodos[action.payload.id].complete = action.payload.complete;
       return {
         ...state,
         todos: toggledTodos,

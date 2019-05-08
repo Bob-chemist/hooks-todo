@@ -30,7 +30,6 @@ export default function TodoForm() {
           complete: false,
         }
       );
-
       dispatch({
         type: 'ADD_TODO',
         payload: {

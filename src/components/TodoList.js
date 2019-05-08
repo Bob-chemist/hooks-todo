@@ -18,8 +18,17 @@ function TodoList() {
               className="flex items-center bg-orange-dark border black border-dashed border-2 my-2 py-2"
             >
               <span
-                onClick={() => {
-                  dispatch({ type: 'TOGGLE_TODO', payload: todo });
+                onClick={async () => {
+                  const response = await Axios.patch(
+                    `https://hooks-todo-9b98c.firebaseio.com/todos/${
+                      todo.id
+                    }.json`,
+                    { complete: !todo.complete }
+                  );
+                  dispatch({
+                    type: 'TOGGLE_TODO',
+                    payload: { ...response.data, id: todo.id },
+                  });
                 }}
                 className={`flex-1 ml-12 cursor-pointer ${todo.complete &&
                   'line-through text-grey-darkest'}`}
