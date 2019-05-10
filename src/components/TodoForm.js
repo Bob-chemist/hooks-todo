@@ -39,6 +39,9 @@ export default function TodoForm() {
         payload: { text: response.data.text, id: currentTodo.id },
       });
     } else {
+      if (Object.keys(todos).length === 20) {
+        return;
+      }
       const response = await Axios.post(
         'https://hooks-todo-9b98c.firebaseio.com/todos.json',
         {

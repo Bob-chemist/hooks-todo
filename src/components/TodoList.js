@@ -5,10 +5,20 @@ import Axios from 'axios';
 function TodoList() {
   const { state, dispatch } = useContext(TodosContext);
   const length = Object.keys(state.todos).length;
-  const title = length > 0 ? `${length} Todos` : 'Nothing to do!';
+  let title = length > 0 ? `${length} Todos` : 'Nothing to do!';
+  if (length >= 20) {
+    title += '';
+  }
   return (
     <div className="container mx-auto max-w-md text-center font-mono">
       <h1 className="text-bold">{title}</h1>
+      {length >= 20 ? (
+        <p className="text-bold text-red">
+          You have reached maximum amount of todos. Please, delete some!
+        </p>
+      ) : (
+        <p>You can add {20 - length} more todos!</p>
+      )}
       <ul className="list-reset text-white p-0">
         {Object.keys(state.todos).map(i => {
           const todo = state.todos[i];
