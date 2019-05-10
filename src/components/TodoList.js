@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
 import TodosContext from '../context';
 import Axios from 'axios';
+import Loader from './Loader';
 
 function TodoList() {
   const { state, dispatch } = useContext(TodosContext);
   const length = Object.keys(state.todos).length;
   let title = length > 0 ? `${length} Todos` : 'Nothing to do!';
-  if (length >= 20) {
-    title += '';
-  }
+
   return (
     <div className="container mx-auto max-w-md text-center font-mono">
       <h1 className="text-bold">{title}</h1>

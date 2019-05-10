@@ -16,15 +16,19 @@ const useAPI = endpoint => {
   }, []);
 
   const getData = async () => {
-    const response = await Axios.get(endpoint);
-    if (response.data) {
-      for (let i in response.data) {
-        const todo = response.data[i];
-        todo.id = i;
+    try {
+      const response = await Axios.get(endpoint);
+      if (response.data) {
+        for (let i in response.data) {
+          const todo = response.data[i];
+          todo.id = i;
+        }
+        setData(response.data);
+      } else {
+        setData({});
       }
-      setData(response.data);
-    } else {
-      setData({});
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -34,6 +38,7 @@ const useAPI = endpoint => {
 const App = () => {
   const initialState = useContext(TodosContext);
   const [state, dispatch] = useReducer(todosReducer, initialState);
+
   const savedTodos = useAPI(
     'https://hooks-todo-9b98c.firebaseio.com/todos.json'
   );

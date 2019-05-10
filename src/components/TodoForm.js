@@ -60,14 +60,30 @@ export default function TodoForm() {
     setTodo('');
   };
 
+  const handleClear = () => {
+    setTodo('');
+    dispatch({
+      type: 'CLEAR_CURRENT_TODO',
+    });
+  };
+
   return (
     <form className="flex justify-center p-5" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="border-black border-solid border-2 p-1"
+        className="border-black border-solid border-2 m-1 p-2 rounded"
         onChange={event => setTodo(event.target.value)}
         value={todo}
       />
+      <button type="submit" className="bg-orange rounded m-1 p-2">
+        Submit
+      </button>
+      <button
+        className="bg-teal text-white m-1 p-2 rounded"
+        onClick={handleClear}
+      >
+        Clear
+      </button>
     </form>
   );
 }

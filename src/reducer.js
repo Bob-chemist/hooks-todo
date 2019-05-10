@@ -5,6 +5,7 @@ export default function todosReducer(state, action) {
         ...state,
         todos: action.payload,
       };
+
     case 'ADD_TODO':
       const { payload } = action;
       return {
@@ -14,11 +15,13 @@ export default function todosReducer(state, action) {
           [payload.id]: { ...payload },
         },
       };
+
     case 'SET_CURRENT_TODO':
       return {
         ...state,
         currentTodo: action.payload,
       };
+
     case 'UPDATE_TODO':
       const updatedTodos = { ...state.todos };
       updatedTodos[action.payload.id].text = action.payload.text;
@@ -45,6 +48,12 @@ export default function todosReducer(state, action) {
         ...state,
         currentTodo: isRemovedTodo,
         todos: removeTodos,
+      };
+
+    case 'CLEAR_CURRENT_TODO':
+      return {
+        ...state,
+        currentTodo: {},
       };
     default:
       return state;
