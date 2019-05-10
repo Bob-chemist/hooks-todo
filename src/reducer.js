@@ -6,18 +6,6 @@ export default function todosReducer(state, action) {
         todos: action.payload,
       };
     case 'ADD_TODO':
-      // if (!action.payload.trim()) {
-      //   return state;
-      // }
-      // if (
-      //   ~state.todos.findIndex(
-      //     todo =>
-      //       todo.text.trim().toLowerCase() ===
-      //       action.payload.trim().toLowerCase()
-      //   )
-      // ) {
-      //   return state;
-      // }
       const { payload } = action;
       return {
         ...state,
