@@ -32,22 +32,6 @@ export default function todosReducer(state, action) {
         currentTodo: action.payload,
       };
     case 'UPDATE_TODO':
-      // if (!action.payload.trim()) {
-      //   return state;
-      // }
-      // if (
-      //   ~state.todos.findIndex(
-      //     todo =>
-      //       todo.text.trim().toLowerCase() ===
-      //       action.payload.trim().toLowerCase()
-      //   )
-      // ) {
-      //   return state;
-      // }
-      // const updatedTodo = { ...state.currentTodo, text: action.payload };
-      // const updatedTodoIndex = state.todos.findIndex(
-      //   todo => todo.id === state.currentTodo.id
-      // );
       const updatedTodos = { ...state.todos };
       updatedTodos[action.payload.id].text = action.payload.text;
       return {

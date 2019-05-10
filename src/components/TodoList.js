@@ -52,7 +52,7 @@ function TodoList() {
                     `https://hooks-todo-9b98c.firebaseio.com/todos/${
                       todo.id
                     }.json`
-                  ).then(response => console.log(response));
+                  );
                   dispatch({ type: 'REMOVE_TODO', payload: todo });
                 }}
               >

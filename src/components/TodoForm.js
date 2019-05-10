@@ -5,7 +5,7 @@ import Axios from 'axios';
 export default function TodoForm() {
   const [todo, setTodo] = useState('');
   const {
-    state: { currentTodo = {} },
+    state: { todos, currentTodo = {} },
     dispatch,
   } = useContext(TodosContext);
 
@@ -20,10 +20,19 @@ export default function TodoForm() {
 
   const handleSubmit = async event => {
     event.preventDefault();
+    if (todo.trim() === '') {
+      return;
+    }
+    for (let i in todos) {
+      if (todo.trim().toLowerCase() === todos[i].text.toLowerCase()) {
+        return;
+      }
+    }
+
     if (currentTodo.text) {
       const response = await Axios.patch(
         `https://hooks-todo-9b98c.firebaseio.com/todos/${currentTodo.id}.json`,
-        { text: todo }
+        { text: todo.trim() }
       );
       dispatch({
         type: 'UPDATE_TODO',
@@ -33,7 +42,7 @@ export default function TodoForm() {
       const response = await Axios.post(
         'https://hooks-todo-9b98c.firebaseio.com/todos.json',
         {
-          text: todo,
+          text: todo.trim(),
           complete: false,
         }
       );
@@ -52,7 +61,7 @@ export default function TodoForm() {
     <form className="flex justify-center p-5" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="border-black border-solid border-2"
+        className="border-black border-solid border-2 p-1"
         onChange={event => setTodo(event.target.value)}
         value={todo}
       />
