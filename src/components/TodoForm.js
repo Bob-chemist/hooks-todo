@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import TodosContext from '../context';
 import Axios from 'axios';
 
@@ -8,6 +8,7 @@ export default function TodoForm() {
     state: { todos, currentTodo = {} },
     dispatch,
   } = useContext(TodosContext);
+  const inputRef = useRef();
 
   useEffect(() => {
     if (currentTodo.text) {
@@ -20,6 +21,7 @@ export default function TodoForm() {
 
   const handleSubmit = async event => {
     event.preventDefault();
+    inputRef.current.focus();
     if (todo.trim() === '') {
       return;
     }
@@ -62,28 +64,36 @@ export default function TodoForm() {
 
   const handleClear = () => {
     setTodo('');
+    inputRef.current.focus();
     dispatch({
       type: 'CLEAR_CURRENT_TODO',
     });
   };
 
   return (
-    <form className="flex justify-center p-5" onSubmit={handleSubmit}>
+    <form className="flex justify-center p-1 flex-wrap" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="border-black border-solid border-2 m-1 p-2 rounded"
+        className="border-black border-solid border-2 m-1 p-1 rounded"
+        ref={inputRef}
         onChange={event => setTodo(event.target.value)}
         value={todo}
       />
-      <button type="submit" className="bg-orange rounded m-1 p-2">
-        Submit
-      </button>
-      <button
-        className="bg-teal text-white m-1 p-2 rounded"
-        onClick={handleClear}
-      >
-        Clear
-      </button>
+      <div>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="bg-orange rounded m-1 p-2"
+        >
+          Submit
+        </button>
+        <button
+          className="bg-teal text-white m-1 p-2 rounded"
+          onClick={handleClear}
+        >
+          Clear
+        </button>
+      </div>
     </form>
   );
 }

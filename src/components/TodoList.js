@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import TodosContext from '../context';
 import Axios from 'axios';
-import Loader from './Loader';
 
 function TodoList() {
   const { state, dispatch } = useContext(TodosContext);
@@ -9,8 +8,8 @@ function TodoList() {
   let title = length > 0 ? `${length} Todos` : 'Nothing to do!';
 
   return (
-    <div className="container mx-auto max-w-md text-center font-mono">
-      <h1 className="text-bold">{title}</h1>
+    <div className="container mx-auto max-w-md text-center font-mono p-1">
+      <h1 className="text-bold pt-4">{title}</h1>
       {length >= 20 ? (
         <p className="text-bold text-red">
           You have reached maximum amount of todos. Please, delete some!
