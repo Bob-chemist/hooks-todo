@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 export default function TodoForm() {
   const [todo, setTodo] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const {
     state: { todos, currentTodo = {} },
     dispatch,
@@ -21,12 +22,15 @@ export default function TodoForm() {
 
   const handleSubmit = async event => {
     event.preventDefault();
+    setButtonDisabled(true);
     inputRef.current.focus();
     if (todo.trim() === '') {
+      setButtonDisabled(false);
       return;
     }
     for (let i in todos) {
       if (todo.trim().toLowerCase() === todos[i].text.toLowerCase()) {
+        setButtonDisabled(false);
         return;
       }
     }
@@ -41,7 +45,8 @@ export default function TodoForm() {
         payload: { text: response.data.text, id: currentTodo.id },
       });
     } else {
-      if (Object.keys(todos).length === 20) {
+      if (Object.keys(todos).length >= 20) {
+        setButtonDisabled(false);
         return;
       }
       const response = await Axios.post(
@@ -60,6 +65,7 @@ export default function TodoForm() {
       });
     }
     setTodo('');
+    setButtonDisabled(false);
   };
 
   const handleClear = () => {
@@ -71,7 +77,11 @@ export default function TodoForm() {
   };
 
   return (
-    <form className="flex justify-center p-1 flex-wrap" onSubmit={handleSubmit}>
+    <form
+      className="flex justify-center p-1 flex-wrap"
+      disabled={buttonDisabled}
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         className="border-black border-solid border-2 m-1 p-1 rounded"
@@ -82,6 +92,7 @@ export default function TodoForm() {
       <div>
         <button
           type="submit"
+          disabled={buttonDisabled}
           onClick={handleSubmit}
           className="bg-orange rounded m-1 p-2"
         >

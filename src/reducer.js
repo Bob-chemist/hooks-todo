@@ -24,7 +24,9 @@ export default function todosReducer(state, action) {
 
     case 'UPDATE_TODO':
       const updatedTodos = { ...state.todos };
-      updatedTodos[action.payload.id].text = action.payload.text;
+      if (updatedTodos[action.payload.id]) {
+        updatedTodos[action.payload.id].text = action.payload.text;
+      }
       return {
         ...state,
         currentTodo: {},
