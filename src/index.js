@@ -5,10 +5,11 @@ import TodosContext from './context';
 import todosReducer from './reducer';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import Loader from './components/Loader';
 import Axios from 'axios';
 
 const useAPI = endpoint => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     getData();
@@ -31,7 +32,6 @@ const useAPI = endpoint => {
       console.log(error);
     }
   };
-
   return data;
 };
 
@@ -53,7 +53,7 @@ const App = () => {
   return (
     <TodosContext.Provider value={{ state, dispatch }}>
       <TodoForm />
-      <TodoList />
+      {state.loading ? <Loader /> : <TodoList />}
     </TodosContext.Provider>
   );
 };

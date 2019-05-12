@@ -1,10 +1,18 @@
 export default function todosReducer(state, action) {
   switch (action.type) {
     case 'GET_TODOS':
-      return {
-        ...state,
-        todos: action.payload,
-      };
+      if (action.payload) {
+        return {
+          ...state,
+          todos: action.payload,
+          loading: false,
+        };
+      } else {
+        return {
+          ...state,
+          todos: action.payload,
+        };
+      }
 
     case 'ADD_TODO':
       const { payload } = action;
@@ -57,6 +65,7 @@ export default function todosReducer(state, action) {
         ...state,
         currentTodo: {},
       };
+
     default:
       return state;
   }
