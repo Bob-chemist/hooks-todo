@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import TodosContext from '../context';
 import Axios from 'axios';
 
@@ -20,7 +20,7 @@ export default function TodoForm() {
     // eslint-disable-next-line
   }, [currentTodo.id]);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setButtonDisabled(true);
     inputRef.current.focus();
@@ -86,7 +86,7 @@ export default function TodoForm() {
         type="text"
         className="border-black border-solid border-2 m-1 p-1 rounded"
         ref={inputRef}
-        onChange={event => setTodo(event.target.value)}
+        onChange={(event) => setTodo(event.target.value)}
         value={todo}
       />
       <div>

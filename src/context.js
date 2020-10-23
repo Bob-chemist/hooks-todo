@@ -1,6 +1,6 @@
-import React from 'react';
+import { createContext } from 'react';
 
-const TodosContext = React.createContext({
+const TodosContext = createContext({
   todos: {},
   currentTodo: {},
   loading: true,

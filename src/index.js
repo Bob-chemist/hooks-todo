@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import { useState, useEffect, useContext, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import TodosContext from './context';
@@ -8,7 +8,7 @@ import TodoForm from './components/TodoForm';
 import Loader from './components/Loader';
 import Axios from 'axios';
 
-const useAPI = endpoint => {
+const useAPI = (endpoint) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
